@@ -1,0 +1,2 @@
+C:\Users\A\Documents\Visual Studio 2010\Projects\NetworkAnalyzer\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.exe
+C:\Users\A\Documents\Visual Studio 2010\Projects\NetworkAnalyzer\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.pdb
