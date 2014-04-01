@@ -218,6 +218,7 @@ namespace NetworkAnalyzer
 
         // T : TcpEntry / UdpEntry
         private List<T> getOpenedPorts_XP_Get<T>()
+            where T : Entry
         {
             IntPtr ptrTable;
             int ret;

@@ -102,32 +102,31 @@ namespace NetworkAnalyzer
         #endregion
 
         #region Equal
+        private static bool CheckSimilarities(TcpEntry entry1, TcpEntry entry2)
+        {
+            if (Object.ReferenceEquals(entry1, null)) // entry1 = null
+                return Object.ReferenceEquals(entry2, null);
+            else // entry1 != null
+                if (Object.ReferenceEquals(entry2, null)) // entry2 = null
+                    return false;
+            
+            // entry1 != null & entry2 != null
+
+            return entry1.ProcessID == entry2.ProcessID &&
+                entry1.LocalEndPoint.Address.Equals(entry2.LocalEndPoint.Address) &&
+                entry1.LocalEndPoint.Port == entry2.LocalEndPoint.Port &&
+                entry1.RemoteEndPoint.Address.Equals(entry2.RemoteEndPoint.Address) &&
+                entry1.RemoteEndPoint.Port == entry2.RemoteEndPoint.Port;
+        }
+
         public bool Equals(TcpEntry o)
         {
-            return this.ProcessID == o.ProcessID &&
-                this.LocalEndPoint.Address.Equals(o.LocalEndPoint.Address) &&
-                this.LocalEndPoint.Port == o.LocalEndPoint.Port &&
-                this.RemoteEndPoint.Address.Equals(o.RemoteEndPoint.Address) &&
-                this.RemoteEndPoint.Port == o.RemoteEndPoint.Port;
-        }
-        public bool Equals(Entry o)
-        {
-            return this.ProcessID == o.ProcessID &&
-                this.LocalEndPoint.Address.Equals(o.LocalEndPoint.Address) &&
-                this.LocalEndPoint.Port == o.LocalEndPoint.Port;
+            return CheckSimilarities(this, o);
         }
         public override bool Equals(object obj)
         {
             if (obj is TcpEntry)
-            {
-                TcpEntry o = obj as TcpEntry;
-                return o.Equals(this);
-            }
-            if (obj is Entry)
-            {
-                TcpEntry o = obj as TcpEntry;
-                return o.Equals(this);
-            }
+                return CheckSimilarities(this, obj as TcpEntry);
 
             return false;
         }
@@ -136,13 +135,13 @@ namespace NetworkAnalyzer
             return ProcessID * 3 + LocalEndPoint.GetHashCode() * 2 + RemoteEndPoint.GetHashCode();
         }
 
-        public static bool operator ==(TcpEntry entry, TcpEntry entry2)
+        public static bool operator ==(TcpEntry entry1, TcpEntry entry2)
         {
-            return entry.Equals(entry2);
+            return CheckSimilarities(entry1, entry2);
         }
-        public static bool operator !=(TcpEntry entry, TcpEntry entry2)
+        public static bool operator !=(TcpEntry entry1, TcpEntry entry2)
         {
-            return !(entry == entry2);
+            return !CheckSimilarities(entry1, entry2);
         }
         #endregion
 

@@ -62,9 +62,7 @@ namespace NetworkAnalyzer
             manager = new PortManager();
 
             // Runtime
-            all_entries = new Entry[0];
-            tcp_entries = new TcpEntry[0];
-            udp_entries = new UdpEntry[0];
+            last_entries = new Entry[0];
         }
         #endregion
 
@@ -106,9 +104,7 @@ namespace NetworkAnalyzer
 
         #region Runtime
 
-        private Entry[] all_entries;
-        private TcpEntry[] tcp_entries;
-        private UdpEntry[] udp_entries;
+        private Entry[] last_entries;
 
         private Thread th_runtime;
         private void Runtime()
@@ -123,20 +119,36 @@ namespace NetworkAnalyzer
                     {
                         manager.Refresh();
 
-                        tcp_entries = (from e in manager.TCPTable
-                                       where (from el in all_entries where el.Equals(e) select el).Count() == 0
-                                       select e).ToArray();
+                        // Removed entries
+                        TcpEntry[] r_tcp_entries = (from e in last_entries
+                                                    where e is TcpEntry && (from el in manager.TCPTable where el.Equals(e) select el).Count() == 0
+                                                    select (TcpEntry)e).ToArray();
 
-                        udp_entries = (from e in manager.UDPTable
-                                       where !udp_entries.Contains(e)
-                                       select e).ToArray();
+                        UdpEntry[] r_udp_entries = (from e in last_entries
+                                                    where e is UdpEntry && (from el in manager.UDPTable where el.Equals(e) select el).Count() == 0
+                                                    select (UdpEntry)e).ToArray();
+
+                        Entry[] all_removed_entries = ((Entry[])r_udp_entries).Concat((Entry[])r_tcp_entries).ToArray();
+
+                        // New entries
+                        TcpEntry[] tcp_entries = (from e in manager.TCPTable
+                                                  where (from el in last_entries where el.Equals(e) select el).Count() == 0
+                                                  select e).ToArray();
+
+                        UdpEntry[] udp_entries = (from e in manager.UDPTable
+                                                  where (from el in last_entries where el.Equals(e) select el).Count() == 0
+                                                  select e).ToArray();
 
                         Entry[] all_new_entries = ((Entry[])udp_entries).Concat((Entry[])tcp_entries).ToArray();
-                        all_entries = manager.Table.ToArray();
+                        last_entries = manager.Table.ToArray();
 
                         Invoke_NewEntryEvent(all_new_entries);
                         Invoke_NewTCPEntryEvent(tcp_entries);
                         Invoke_NewUDPEntryEvent(udp_entries);
+
+                        Invoke_RemovedEntryEvent(all_removed_entries);
+                        Invoke_RemovedTCPEntryEvent(r_tcp_entries);
+                        Invoke_RemovedUDPEntryEvent(r_udp_entries);
                     }
 
                     System.Threading.Thread.Sleep(Interval); // State Sleep -> Out Point by "Thread.Interrupt()"
@@ -165,18 +177,34 @@ namespace NetworkAnalyzer
 
         protected void Invoke_NewEntryEvent(Entry[] entries)
         {
-            if (NewEntry != null && entries != null && entries.Count() > 0)
-                Invoke(NewEntry, entries);
+            Invoke(NewEntry, entries);
         }
         protected void Invoke_NewTCPEntryEvent(TcpEntry[] entries)
         {
-            if (NewTCPEntry != null && entries != null && entries.Count() > 0)
-                Invoke(NewTCPEntry, entries);
+            Invoke(NewTCPEntry, entries);
         }
         protected void Invoke_NewUDPEntryEvent(UdpEntry[] entries)
         {
-            if (NewUDPEntry != null && entries != null && entries.Count() > 0)
-                Invoke(NewUDPEntry, entries);
+            Invoke(NewUDPEntry, entries);
+        }
+        #endregion
+
+        #region Removed Entries
+        public event PortWatcherEntriesEventHandler RemovedEntry;
+        public event PortWatcherTCPEntriesEventHandler RemovedTCPEntry;
+        public event PortWatcherUDPEntriesEventHandler RemovedUDPEntry;
+
+        protected void Invoke_RemovedEntryEvent(Entry[] entries)
+        {
+            Invoke(RemovedEntry, entries);
+        }
+        protected void Invoke_RemovedTCPEntryEvent(TcpEntry[] entries)
+        {
+            Invoke(RemovedTCPEntry, entries);
+        }
+        protected void Invoke_RemovedUDPEntryEvent(UdpEntry[] entries)
+        {
+            Invoke(RemovedUDPEntry, entries);
         }
         #endregion
 
@@ -188,13 +216,11 @@ namespace NetworkAnalyzer
 
         protected void Invoke_Started()
         {
-            if (Started != null)
-                Invoke(Started);
+            Invoke(Started);
         }
         protected void Invoke_Stopped()
         {
-            if (Stopped != null)
-                Invoke(Stopped);
+            Invoke(Stopped);
         }
         #endregion
 
@@ -204,12 +230,16 @@ namespace NetworkAnalyzer
         {
             DirectInvoke(eventToInvoke, new object[] { this });
         }
-        protected void Invoke(Delegate eventToInvoke, object param)
+        protected void Invoke(Delegate eventToInvoke, Entry[] entries)
         {
-            DirectInvoke(eventToInvoke, new object[] { this, param });
+            if (entries != null && entries.Count() > 0)
+                DirectInvoke(eventToInvoke, new object[] { this, entries });
         }
         protected void DirectInvoke(Delegate eventToInvoke, object[] param)
         {
+            if (eventToInvoke == null)
+                return;
+
             try
             {
                 eventToInvoke.DynamicInvoke(param);
