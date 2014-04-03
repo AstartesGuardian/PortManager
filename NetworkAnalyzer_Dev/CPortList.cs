@@ -17,6 +17,8 @@ namespace NetworkAnalyzer_Dev
         {
             InitializeComponent();
 
+            this.Disposed += new EventHandler(CPortList_Disposed);
+
             pw = new PortWatcher();
             pw.NewEntry += new PortWatcher.PortWatcherEntriesEventHandler(pw_NewEntry);
             pw.RemovedEntry += new PortWatcher.PortWatcherEntriesEventHandler(pw_RemovedEntry);
@@ -123,12 +125,22 @@ namespace NetworkAnalyzer_Dev
 
         public void Start()
         {
-            pw.Start();
+            pw.Resume();
         }
 
         public void Stop()
         {
-            pw.Stop();
+            pw.Pause();
+        }
+
+        private void CPortList_Disposed(object sender, EventArgs e)
+        {
+            try
+            {
+                pw.Stop();
+            }
+            catch
+            { }
         }
     }
 }

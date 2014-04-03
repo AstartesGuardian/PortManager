@@ -7,3 +7,4 @@ F:\Projects\NetworkAnalyzer\NetworkAnalyzer\obj\Debug\NetworkAnalyzer.dll
 F:\Projects\NetworkAnalyzer\NetworkAnalyzer\bin\Debug\NetworkAnalyzer.dll
 F:\Projects\NetworkAnalyzer\NetworkAnalyzer\bin\Debug\NetworkAnalyzer.pdb
 F:\Projects\NetworkAnalyzer\NetworkAnalyzer\obj\Debug\NetworkAnalyzer.pdb
+F:\Projects\NetworkAnalyzer\NetworkAnalyzer\obj\Debug\NetworkAnalyzer_Lib.csprojResolveAssemblyReference.cache

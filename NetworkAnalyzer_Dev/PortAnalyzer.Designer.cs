@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.button3 = new System.Windows.Forms.Button();
-            this.cProcessList1 = new NetworkAnalyzer_Dev.CPortList();
             this.button1 = new System.Windows.Forms.Button();
+            this.cProcessList1 = new NetworkAnalyzer_Dev.CPortList();
             this.SuspendLayout();
             // 
             // button3
@@ -43,13 +43,6 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // cProcessList1
-            // 
-            this.cProcessList1.Location = new System.Drawing.Point(50, 41);
-            this.cProcessList1.Name = "cProcessList1";
-            this.cProcessList1.Size = new System.Drawing.Size(559, 287);
-            this.cProcessList1.TabIndex = 6;
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(93, 12);
@@ -59,6 +52,13 @@
             this.button1.Text = "Stop";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // cProcessList1
+            // 
+            this.cProcessList1.Location = new System.Drawing.Point(50, 41);
+            this.cProcessList1.Name = "cProcessList1";
+            this.cProcessList1.Size = new System.Drawing.Size(559, 287);
+            this.cProcessList1.TabIndex = 6;
             // 
             // PortAnalyzer
             // 
