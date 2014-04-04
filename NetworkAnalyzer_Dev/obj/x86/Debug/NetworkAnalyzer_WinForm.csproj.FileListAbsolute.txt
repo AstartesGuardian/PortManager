@@ -19,3 +19,13 @@ F:\Projects\NetworkAnalyzer\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_De
 F:\Projects\NetworkAnalyzer\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_WinForm.csproj.GenerateResource.Cache
 F:\Projects\NetworkAnalyzer\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.PortAnalyzer.resources
 F:\Projects\NetworkAnalyzer\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.CPortList.resources
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.exe
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.pdb
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\bin\Debug\NetworkAnalyzer_Dev.pdb
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\bin\Debug\NetworkAnalyzer.dll
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\bin\Debug\NetworkAnalyzer.pdb
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_WinForm.csprojResolveAssemblyReference.cache
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.CPortList.resources
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.PortAnalyzer.resources
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.Properties.Resources.resources
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_WinForm.csproj.GenerateResource.Cache
