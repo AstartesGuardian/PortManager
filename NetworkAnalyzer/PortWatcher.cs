@@ -56,7 +56,7 @@ namespace NetworkAnalyzer
         {
             Interval = DEFAULT.DefaultInterval;
 
-            manager = new PortManager();
+            Manager = new PortManager();
 
             // Runtime
             m_IsRunning = false;
@@ -72,7 +72,11 @@ namespace NetworkAnalyzer
         /// </summary>
         private readonly int[] watchedPorts;
 
-        private PortManager manager;
+        public PortManager Manager
+        {
+            get;
+            private set;
+        }
 
 
         public int Interval // Boxed
@@ -146,10 +150,7 @@ namespace NetworkAnalyzer
                     mx_runtime.WaitOne();
                     mx_runtime.ReleaseMutex();
 
-                    lock (manager)
-                    {
-                        Runtime_main();
-                    }
+                    Runtime_main();
                     
                     System.Threading.Thread.Sleep(Interval);
                 } while (th_runtime.ThreadState != System.Threading.ThreadState.StopRequested);
@@ -163,35 +164,46 @@ namespace NetworkAnalyzer
 
         private void Runtime_main()
         {
-            manager.Refresh();
+            Entry[] entries;
+            TcpEntry[] tcp_entries;
+            UdpEntry[] udp_entries;
+
+            lock (Manager)
+            {
+                Manager.Refresh();
+
+                entries = Manager.Table.ToArray();
+                tcp_entries = Manager.TCPTable.ToArray();
+                udp_entries = Manager.UDPTable.ToArray();
+            }
 
             // Removed entries
             TcpEntry[] r_tcp_entries = (from e in last_entries
-                                        where e is TcpEntry && (from el in manager.TCPTable where el.Equals(e) select el).Count() == 0
+                                        where e is TcpEntry && (from el in tcp_entries where el.Equals(e) select el).Count() == 0
                                         select (TcpEntry)e).ToArray();
 
             UdpEntry[] r_udp_entries = (from e in last_entries
-                                        where e is UdpEntry && (from el in manager.UDPTable where el.Equals(e) select el).Count() == 0
+                                        where e is UdpEntry && (from el in udp_entries where el.Equals(e) select el).Count() == 0
                                         select (UdpEntry)e).ToArray();
 
             Entry[] all_removed_entries = ((Entry[])r_udp_entries).Concat((Entry[])r_tcp_entries).ToArray();
 
             // New entries
-            TcpEntry[] tcp_entries = (from e in manager.TCPTable
+            TcpEntry[] n_tcp_entries = (from e in tcp_entries
                                       where (from el in last_entries where el.Equals(e) select el).Count() == 0
                                       select e).ToArray();
 
-            UdpEntry[] udp_entries = (from e in manager.UDPTable
+            UdpEntry[] n_udp_entries = (from e in udp_entries
                                       where (from el in last_entries where el.Equals(e) select el).Count() == 0
                                       select e).ToArray();
 
-            Entry[] all_new_entries = ((Entry[])udp_entries).Concat((Entry[])tcp_entries).ToArray();
+            Entry[] all_new_entries = ((Entry[])n_udp_entries).Concat((Entry[])n_tcp_entries).ToArray();
 
-            last_entries = manager.Table.ToArray();
+            last_entries = entries;
 
             Invoke_NewEntryEvent(all_new_entries);
-            Invoke_NewTCPEntryEvent(tcp_entries);
-            Invoke_NewUDPEntryEvent(udp_entries);
+            Invoke_NewTCPEntryEvent(n_tcp_entries);
+            Invoke_NewUDPEntryEvent(n_udp_entries);
 
             Invoke_RemovedEntryEvent(all_removed_entries);
             Invoke_RemovedTCPEntryEvent(r_tcp_entries);

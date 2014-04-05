@@ -21,14 +21,12 @@ namespace NetworkAnalyzer_Dev
             InitializeComponent();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void cb_analyzer_CheckedChanged(object sender, EventArgs e)
         {
-            cProcessList1.Start();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            cProcessList1.Stop();
+            if (cb_analyzer.Checked)
+                cProcessList1.Start();
+            else
+                cProcessList1.Stop();
         }
     }
 }

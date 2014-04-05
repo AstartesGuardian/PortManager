@@ -37,6 +37,14 @@
   <PropertyGroup>
     <StartupObject>NetworkAnalyzer_Dev.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>open-xxl.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NetworkAnalyzer_Dev, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <ExecutableExtension>.exe</ExecutableExtension>
@@ -59,6 +67,7 @@
     <Compile Include="CPortList.Designer.cs">
       <DependentUpon>CPortList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filter.cs" />
     <Compile Include="PortAnalyzer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +76,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Researcher.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Researcher.Designer.cs">
+      <DependentUpon>Researcher.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CPortList.resx">
       <DependentUpon>CPortList.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,6 +97,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Researcher.resx">
+      <DependentUpon>Researcher.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -97,6 +116,9 @@
       <Project>{19E51F8B-0F89-4B70-BC9E-BC5094D081AD}</Project>
       <Name>NetworkAnalyzer_Lib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="open-xxl.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

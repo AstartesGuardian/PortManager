@@ -29,3 +29,4 @@ D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer
 D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.PortAnalyzer.resources
 D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.Properties.Resources.resources
 D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_WinForm.csproj.GenerateResource.Cache
+D:\C on Y\Projects\PortManager\NetworkAnalyzer_Dev\obj\x86\Debug\NetworkAnalyzer_Dev.Researcher.resources

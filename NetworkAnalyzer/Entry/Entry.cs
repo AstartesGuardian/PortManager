@@ -71,7 +71,14 @@ namespace NetworkAnalyzer
                 if (string.IsNullOrEmpty(this.m_ProcessName))
                 {
                     if (m_Process != null)
-                        this.m_ProcessName = m_Process.ProcessName;
+                        try
+                        {
+                            this.m_ProcessName = m_Process.ProcessName;
+                        }
+                        catch (System.InvalidOperationException)
+                        {
+                            return null;
+                        }
                 }
                 return this.m_ProcessName;
             }
