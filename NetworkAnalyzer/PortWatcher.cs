@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace NetworkAnalyzer
 {
-    public class PortWatcher
+    public class PortWatcher : IDisposable
     {
         #region Default Parameters
         private static class DEFAULT
@@ -110,7 +110,7 @@ namespace NetworkAnalyzer
         }
 
 
-        private bool m_IsRunning;
+        private volatile bool m_IsRunning;
         public bool IsRunning // Boxed
         {
             get
@@ -144,8 +144,10 @@ namespace NetworkAnalyzer
         {
             try
             {
+                // Start event
                 Invoke_Started();
-                do
+
+                do // Runtime
                 {
                     mx_runtime.WaitOne();
                     mx_runtime.ReleaseMutex();
@@ -158,6 +160,7 @@ namespace NetworkAnalyzer
             catch (ThreadInterruptedException)
             {
                 m_IsRunning = false;
+                // Stop event
                 Invoke_Stopped();
             }
         }
@@ -178,24 +181,14 @@ namespace NetworkAnalyzer
             }
 
             // Removed entries
-            TcpEntry[] r_tcp_entries = (from e in last_entries
-                                        where e is TcpEntry && (from el in tcp_entries where el.Equals(e) select el).Count() == 0
-                                        select (TcpEntry)e).ToArray();
-
-            UdpEntry[] r_udp_entries = (from e in last_entries
-                                        where e is UdpEntry && (from el in udp_entries where el.Equals(e) select el).Count() == 0
-                                        select (UdpEntry)e).ToArray();
+            TcpEntry[] r_tcp_entries = last_entries.Where(e => e is TcpEntry && !tcp_entries.Contains(e)).Cast<TcpEntry>().ToArray();
+            UdpEntry[] r_udp_entries = last_entries.Where(e => e is UdpEntry && !udp_entries.Contains(e)).Cast<UdpEntry>().ToArray();
 
             Entry[] all_removed_entries = ((Entry[])r_udp_entries).Concat((Entry[])r_tcp_entries).ToArray();
 
             // New entries
-            TcpEntry[] n_tcp_entries = (from e in tcp_entries
-                                      where (from el in last_entries where el.Equals(e) select el).Count() == 0
-                                      select e).ToArray();
-
-            UdpEntry[] n_udp_entries = (from e in udp_entries
-                                      where (from el in last_entries where el.Equals(e) select el).Count() == 0
-                                      select e).ToArray();
+            TcpEntry[] n_tcp_entries = tcp_entries.Where(e => !last_entries.Contains(e)).ToArray();
+            UdpEntry[] n_udp_entries = udp_entries.Where(e => !last_entries.Contains(e)).ToArray();
 
             Entry[] all_new_entries = ((Entry[])n_udp_entries).Concat((Entry[])n_tcp_entries).ToArray();
 
@@ -211,7 +204,6 @@ namespace NetworkAnalyzer
         }
 
         #endregion
-
 
         #region Events
 
@@ -301,6 +293,13 @@ namespace NetworkAnalyzer
 
         #endregion
 
+        #endregion
+
+        #region Dispose
+        void IDisposable.Dispose()
+        {
+            Stop();
+        }
         #endregion
     }
 }

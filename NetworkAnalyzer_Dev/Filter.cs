@@ -83,6 +83,9 @@ namespace NetworkAnalyzer_Dev
 
             if (Name != null)
             {
+                if (entry.ProcessName == null)
+                    return false;
+
                 return entry.ProcessName.ToLower().StartsWith(Name);
             }
 

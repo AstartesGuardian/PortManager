@@ -13,3 +13,17 @@ D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\NetworkAnalyzer.pdb
 D:\C on Y\Projects\PortManager\NetworkAnalyzer\obj\Debug\NetworkAnalyzer_Lib.csprojResolveAssemblyReference.cache
 D:\C on Y\Projects\PortManager\NetworkAnalyzer\obj\Debug\NetworkAnalyzer.dll
 D:\C on Y\Projects\PortManager\NetworkAnalyzer\obj\Debug\NetworkAnalyzer.pdb
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\obj\Debug\NetworkAnalyzer_Lib.csproj.App.config
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\NetworkAnalyzer.dll.config
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\Microsoft.Threading.Tasks.dll
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.dll
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\System.IO.dll
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\System.Runtime.dll
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\System.Threading.Tasks.dll
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\Microsoft.Threading.Tasks.xml
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\Microsoft.Threading.Tasks.Extensions.xml
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\Microsoft.Threading.Tasks.Extensions.Desktop.xml
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\System.IO.xml
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\System.Runtime.xml
+D:\C on Y\Projects\PortManager\NetworkAnalyzer\bin\Debug\System.Threading.Tasks.xml
